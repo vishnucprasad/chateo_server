@@ -2,8 +2,8 @@
 
 const express = require("express");
 const router = express.Router();
-const authRouter = require("./auth.route");
+const verifyRouter = require("./verify.route");
 
-router.use("/auth", authRouter);
+router.use("/verify", verifyRouter);
 
 module.exports = router;

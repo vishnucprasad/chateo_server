@@ -1,9 +1,9 @@
 "use strict";
 
 const express = require("express");
+const { verifyPhone } = require("../../controllers/verify.controller");
 const router = express.Router();
-const authRouter = require("./auth.route");
 
-router.use("/auth", authRouter);
+router.post("/phone", verifyPhone);
 
 module.exports = router;
