@@ -33,4 +33,19 @@ const sendOtp = async (countryCode, phone) => {
     }
 };
 
-module.exports = { isExistingUser, sendOtp };
+const verifyOtp = async (countryCode, phone, otp) => {
+    try {
+        const verificationChecks = await client.verify.v2
+            .services(serviceSid)
+            .verificationChecks.create({
+                to: `${countryCode}${phone}`,
+                code: otp,
+            });
+
+        return verificationChecks.status === "approved";
+    } catch (e) {
+        throw e;
+    }
+};
+
+module.exports = { isExistingUser, sendOtp, verifyOtp };

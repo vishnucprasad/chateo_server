@@ -1,11 +1,21 @@
 "use strict";
 
+const roles = require("../config/roles.config");
 const statusCodes = require("../config/statuscodes.config");
 const InternalServerError = require("../errors/internalserver.error");
-const { createNewUser } = require("../services/auth.service");
-const { isExistingUser, sendOtp } = require("../services/verify.service");
+const UnauthorizedError = require("../errors/unauthorized.error");
+const {
+    createNewUser,
+    getUser,
+    generateTokens,
+} = require("../services/auth.service");
+const {
+    isExistingUser,
+    sendOtp,
+    verifyOtp,
+} = require("../services/verify.service");
 
-const verifyPhone = async (req, res, next) => {
+const verifyPhoneController = async (req, res, next) => {
     try {
         const { countryCode, phone } = req.body;
 
@@ -32,4 +42,35 @@ const verifyPhone = async (req, res, next) => {
     }
 };
 
-module.exports = { verifyPhone };
+const verifyOtpController = async (req, res, next) => {
+    try {
+        const { countryCode, phone, otp } = req.body;
+
+        if (await verifyOtp(countryCode, phone, otp)) {
+            const user = await getUser(countryCode, phone);
+
+            const { accessToken, refreshToken } = await generateTokens(
+                user,
+                roles.USER
+            );
+
+            return res.status(statusCodes.OK).json({
+                error: false,
+                accessToken,
+                refreshToken,
+                user,
+                message: "OTP verified",
+            });
+        }
+
+        return next(
+            new UnauthorizedError(
+                "Invalid OTP. Please enter a valid OTP to proceed"
+            )
+        );
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+};
+
+module.exports = { verifyPhoneController, verifyOtpController };
