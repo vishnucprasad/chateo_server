@@ -18,9 +18,9 @@ const createNewUser = async (countryCode, phone) => {
     }
 };
 
-const getUser = async (countryCode, phone) => {
+const getUser = async (query) => {
     try {
-        return await User.findOne({ countryCode, phone });
+        return await User.findOne(query);
     } catch (e) {
         throw e;
     }

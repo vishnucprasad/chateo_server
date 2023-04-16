@@ -34,7 +34,7 @@ function getApp(database) {
 
     // Error handler
     app.use((error, req, res, next) => {
-        res.status(error.status || 500).json(error);
+        res.status(error.statusCode || 500).json(error);
     });
 
     return app;

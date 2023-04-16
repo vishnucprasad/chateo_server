@@ -47,7 +47,7 @@ const verifyOtpController = async (req, res, next) => {
         const { countryCode, phone, otp } = req.body;
 
         if (await verifyOtp(countryCode, phone, otp)) {
-            const user = await getUser(countryCode, phone);
+            const user = await getUser({ countryCode, phone });
 
             const { accessToken, refreshToken } = await generateTokens(
                 user,
