@@ -2,7 +2,13 @@
 
 const statusCodes = require("../config/statuscodes.config");
 const InternalServerError = require("../errors/internalserver.error");
-const { getUser, updateProfile } = require("../services/auth.service");
+const UnauthorizedError = require("../errors/unauthorized.error");
+const {
+    getUser,
+    updateProfile,
+    verifyRefreshToken,
+    refreshToken,
+} = require("../services/auth.service");
 
 const authController = async (req, res, next) => {
     try {
@@ -34,4 +40,33 @@ const updateProfileController = async (req, res, next) => {
     }
 };
 
-module.exports = { authController, updateProfileController };
+const refreshTokenController = async (req, res, next) => {
+    try {
+        const tokenDetails = await verifyRefreshToken(req.body.refreshToken);
+
+        const payload = {
+            _id: tokenDetails._id,
+            role: tokenDetails.role,
+        };
+
+        const accessToken = await refreshToken(payload);
+
+        res.status(statusCodes.OK).json({
+            error: false,
+            accessToken,
+            message: "Access token refreshed successfully",
+        });
+    } catch (e) {
+        if (e instanceof UnauthorizedError) {
+            return next(new UnauthorizedError(e.message));
+        }
+
+        next(new InternalServerError(e.message));
+    }
+};
+
+module.exports = {
+    authController,
+    updateProfileController,
+    refreshTokenController,
+};
