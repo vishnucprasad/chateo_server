@@ -84,6 +84,16 @@ const refreshToken = async (payload) => {
     }
 };
 
+const updateProfile = async (userId, patch) => {
+    try {
+        return await User.findOneAndUpdate({ _id: userId }, patch, {
+            new: true,
+        });
+    } catch (e) {
+        throw e;
+    }
+};
+
 module.exports = {
     createNewUser,
     getUser,
@@ -91,4 +101,5 @@ module.exports = {
     verifyAccessToken,
     verifyRefreshToken,
     refreshToken,
+    updateProfile,
 };
