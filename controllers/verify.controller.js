@@ -20,22 +20,32 @@ const verifyPhoneController = async (req, res, next) => {
         const { countryCode, phone } = req.body;
 
         if (await isExistingUser(countryCode, phone)) {
-            await sendOtp(countryCode, phone);
+            const { sid, to, status } = await sendOtp(countryCode, phone);
 
             return res.status(statusCodes.OK).json({
                 error: false,
+                verification: {
+                    sid,
+                    to,
+                    status,
+                },
                 message: `An OTP has been sent to ${countryCode} ${phone}`,
             });
         }
 
         const user = await createNewUser(countryCode, phone);
 
-        await sendOtp(countryCode, phone);
+        const { sid, to, status } = await sendOtp(countryCode, phone);
 
         return res.status(statusCodes.OK).json({
             error: false,
-            message: `An OTP has been sent to ${countryCode} ${phone}`,
+            verification: {
+                sid,
+                to,
+                status,
+            },
             user,
+            message: `An OTP has been sent to ${countryCode} ${phone}`,
         });
     } catch (e) {
         next(new InternalServerError(e.message));

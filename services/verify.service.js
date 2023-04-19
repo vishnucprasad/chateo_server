@@ -30,7 +30,11 @@ const sendOtp = async (countryCode, phone) => {
         // return verification;
 
         // for test purposes
-        return true;
+        return {
+            sid: "VEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            to: `${countryCode}${phone}`,
+            status: "pending",
+        };
     } catch (e) {
         throw e;
     }
