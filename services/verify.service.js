@@ -21,21 +21,21 @@ const isExistingUser = async (countryCode, phone) => {
 
 const sendOtp = async (countryCode, phone) => {
     try {
-        const verification = await client.verify.v2
-            .services(serviceSid)
-            .verifications.create({
-                to: `${countryCode}${phone}`,
-                channel: "sms",
-            });
+        // const verification = await client.verify.v2
+        //     .services(serviceSid)
+        //     .verifications.create({
+        //         to: `${countryCode}${phone}`,
+        //         channel: "sms",
+        //     });
 
-        return verification;
+        // return verification;
 
         // for test purposes
-        // return {
-        //     sid: "VEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        //     to: `${countryCode}${phone}`,
-        //     status: "pending",
-        // };
+        return {
+            sid: "VEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            to: `${countryCode}${phone}`,
+            status: "pending",
+        };
     } catch (e) {
         throw e;
     }
@@ -43,37 +43,37 @@ const sendOtp = async (countryCode, phone) => {
 
 const resendOtp = async (countryCode, phone, currentSid) => {
     try {
-        const verification = await client.verify.v2
-            .services(serviceSid)
-            .verifications(currentSid)
-            .fetch();
+        // const verification = await client.verify.v2
+        //     .services(serviceSid)
+        //     .verifications(currentSid)
+        //     .fetch();
 
-        const createdTime = moment(verification.dateCreated);
-        const now = moment(new Date());
-        const duration = moment.duration(now.diff(createdTime)).asMinutes();
+        // const createdTime = moment(verification.dateCreated);
+        // const now = moment(new Date());
+        // const duration = moment.duration(now.diff(createdTime)).asMinutes();
 
-        if (duration >= 5) {
-            await client.verify.v2
-                .services(serviceSid)
-                .verifications(currentSid)
-                .update({ status: "canceled" });
+        // if (duration >= 5) {
+        //     await client.verify.v2
+        //         .services(serviceSid)
+        //         .verifications(currentSid)
+        //         .update({ status: "canceled" });
 
-            const newVerification = await sendOtp(countryCode, phone);
+        //     const newVerification = await sendOtp(countryCode, phone);
 
-            return newVerification;
-        }
+        //     return newVerification;
+        // }
 
-        const endTime = createdTime.add(5, "minutes");
-        const timeOut = moment.duration(endTime.diff(now)).asMilliseconds();
+        // const endTime = createdTime.add(5, "minutes");
+        // const timeOut = moment.duration(endTime.diff(now)).asMilliseconds();
 
-        return { timeOut };
+        // return { timeOut };
 
         // for test purposes
-        // return {
-        //     sid: "VEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        //     to: `${countryCode}${phone}`,
-        //     status: "pending",
-        // };
+        return {
+            sid: "VEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            to: `${countryCode}${phone}`,
+            status: "pending",
+        };
     } catch (e) {
         try {
             if (e.status === 404) {
@@ -91,22 +91,22 @@ const resendOtp = async (countryCode, phone, currentSid) => {
 
 const verifyOtp = async (countryCode, phone, otp) => {
     try {
-        const verificationChecks = await client.verify.v2
-            .services(serviceSid)
-            .verificationChecks.create({
-                to: `${countryCode}${phone}`,
-                code: otp,
-            });
+        // const verificationChecks = await client.verify.v2
+        //     .services(serviceSid)
+        //     .verificationChecks.create({
+        //         to: `${countryCode}${phone}`,
+        //         code: otp,
+        //     });
 
-        return verificationChecks.status === "approved";
+        // return verificationChecks.status === "approved";
 
         // for test purposes
-        // const zeroPad = (num, places) => String(num).padStart(places, "0");
+        const zeroPad = (num, places) => String(num).padStart(places, "0");
 
-        // const date = new Date().getDate();
-        // const month = new Date().getMonth() + 1;
+        const date = new Date().getDate();
+        const month = new Date().getMonth() + 1;
 
-        // return `${zeroPad(date, 2)}${zeroPad(month, 2)}` === otp;
+        return `${zeroPad(date, 2)}${zeroPad(month, 2)}` === otp;
     } catch (e) {
         throw e;
     }
