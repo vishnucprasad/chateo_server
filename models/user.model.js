@@ -33,6 +33,14 @@ const userShema = new Schema({
     avatar: {
         type: String,
     },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
+    isProfileCompleted: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const User = mongoose.model("User", userShema);
