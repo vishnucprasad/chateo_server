@@ -39,7 +39,9 @@ const generateTokens = async (user, role) => {
         });
 
         const refreshToken = await RefreshToken.findOne({ userId: user._id });
-        if (refreshToken) await refreshToken.remove();
+        if (refreshToken) {
+            await RefreshToken.findByIdAndDelete(refreshToken._id);
+        }
 
         await new RefreshToken({
             userId: user._id,
