@@ -1,3 +1,5 @@
+"use strict";
+
 const statusCodes = require("../config/statuscodes.config");
 const ConflictError = require("../errors/conflict.error");
 const InternalServerError = require("../errors/internalserver.error");

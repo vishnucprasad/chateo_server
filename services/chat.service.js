@@ -18,8 +18,8 @@ const createChat = async (from, to, msg) => {
 
         chat.messages = [message._id];
 
-        await message.save();
         await chat.save();
+        await message.save();
 
         return chat;
     } catch (e) {

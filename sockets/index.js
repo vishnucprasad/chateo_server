@@ -1,3 +1,5 @@
+"use strict";
+
 const { Server } = require("socket.io");
 const logger = require("../config/logger.config");
 

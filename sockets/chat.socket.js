@@ -1,3 +1,5 @@
+"use strict";
+
 const SocketIO = require(".");
 
 const emitNewChat = (to, chat) => {
