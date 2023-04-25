@@ -1,5 +1,6 @@
 "use strict";
 
+const moment = require("moment");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -17,6 +18,14 @@ const chatSchema = new Schema({
         ],
         unique: true,
     },
+    createdAt: {
+        type: Number,
+        default: moment().valueOf(),
+    },
+    modifiedAt: {
+        type: Number,
+        default: moment().valueOf(),
+    },
     messages: {
         type: [mongoose.Types.ObjectId],
         validate: [
@@ -24,6 +33,11 @@ const chatSchema = new Schema({
             "{PATH} list must include a message",
         ],
     },
+});
+
+chatSchema.pre("findOneAndUpdate", function (next) {
+    this._update.modifiedAt = moment().valueOf();
+    next();
 });
 
 const Chat = new mongoose.model("Chat", chatSchema);
