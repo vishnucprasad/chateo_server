@@ -36,7 +36,7 @@ const verifyPhoneController = async (req, res, next) => {
             });
         }
 
-        const user = await createNewUser(countryCode, phone);
+        await createNewUser(countryCode, phone);
 
         const { sid, to, status } = await sendOtp(countryCode, phone);
 
@@ -47,7 +47,6 @@ const verifyPhoneController = async (req, res, next) => {
                 to,
                 status,
             },
-            user,
             message: `An OTP has been sent to ${countryCode} ${phone}`,
         });
     } catch (e) {
