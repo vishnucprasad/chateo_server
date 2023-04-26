@@ -29,7 +29,7 @@ const addMember = async ({ chatId, userId }) => {
         return await Group.findOneAndUpdate(
             { _id: chatId },
             {
-                $addToSet: {
+                $push: {
                     members: { userId },
                 },
             },
@@ -42,4 +42,22 @@ const addMember = async ({ chatId, userId }) => {
     }
 };
 
-module.exports = { createGroup, addMember };
+const removeMember = async ({ chatId, userId }) => {
+    try {
+        return await Group.findOneAndUpdate(
+            {
+                _id: chatId,
+                "members.userId": userId,
+            },
+            {
+                $pull: {
+                    members: { userId },
+                },
+            }
+        );
+    } catch (e) {
+        throw e;
+    }
+};
+
+module.exports = { createGroup, addMember, removeMember };

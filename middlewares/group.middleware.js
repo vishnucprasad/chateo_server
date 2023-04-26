@@ -3,6 +3,7 @@
 const ConflictError = require("../errors/conflict.error");
 const ForbiddenError = require("../errors/forbidden.error");
 const InternalServerError = require("../errors/internalserver.error");
+const NotFoundError = require("../errors/notfound.error");
 const Group = require("../models/group.model");
 
 const isGroupAdmin = async (req, res, next) => {
@@ -57,4 +58,28 @@ const isNotAMember = async (req, res, next) => {
     }
 };
 
-module.exports = { isGroupAdmin, isNotAMember };
+const isAMember = async (req, res, next) => {
+    try {
+        const doc = await Group.findOne({
+            _id: req.body.chatId,
+        }).select({
+            members: {
+                $elemMatch: {
+                    userId: req.body.userId,
+                },
+            },
+        });
+
+        const member = doc.members[0];
+
+        if (!member) {
+            return next(new NotFoundError("Member does not exist"));
+        }
+
+        return next();
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+};
+
+module.exports = { isGroupAdmin, isNotAMember, isAMember };

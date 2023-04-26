@@ -2,7 +2,11 @@
 
 const statusCodes = require("../config/statuscodes.config");
 const InternalServerError = require("../errors/internalserver.error");
-const { createGroup, addMember } = require("../services/group.service");
+const {
+    createGroup,
+    addMember,
+    removeMember,
+} = require("../services/group.service");
 const { emitNewChat } = require("../sockets/chat.socket");
 
 const newGroupController = async (req, res, next) => {
@@ -33,4 +37,21 @@ const addMemberController = async (req, res, next) => {
     }
 };
 
-module.exports = { newGroupController, addMemberController };
+const removeMemberController = async (req, res, next) => {
+    try {
+        await removeMember(req.body);
+
+        res.status(statusCodes.OK).json({
+            error: false,
+            ...req.body,
+        });
+    } catch (e) {
+        next(InternalServerError(e.message));
+    }
+};
+
+module.exports = {
+    newGroupController,
+    addMemberController,
+    removeMemberController,
+};

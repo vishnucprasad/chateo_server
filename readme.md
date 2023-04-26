@@ -26,6 +26,8 @@
     1. [New Group Chat](#i-example-request-new-group-chat)
 1. [Add Member](#9-add-member)
     1. [Add Member](#i-example-request-add-member)
+1. [Remove Member](#10-remove-member)
+    1. [Remove Member](#i-example-request-remove-member)
 
 ## Endpoints
 
@@ -550,6 +552,52 @@ URL: http://localhost:3000/api/v1/chat/group/member
         "messages": [],
         "__v": 0
     }
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 10. Remove Member
+
+**_Endpoint:_**
+
+```bash
+Method: DELETE
+Type: RAW
+URL: http://localhost:3000/api/v1/chat/group/member
+```
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
+}
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: Remove Member
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
+}
+```
+
+#### I. Example Response: Remove Member
+
+```js
+{
+    "error": false,
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
 }
 ```
 
