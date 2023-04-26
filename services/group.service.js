@@ -81,4 +81,31 @@ const makeAsAdmin = async ({ chatId, userId }) => {
     }
 };
 
-module.exports = { createGroup, addMember, removeMember, makeAsAdmin };
+const dismissAsAdmin = async ({ chatId, userId }) => {
+    try {
+        return await Group.findOneAndUpdate(
+            {
+                _id: chatId,
+                "members.userId": userId,
+            },
+            {
+                $set: {
+                    "members.$.isAdmin": false,
+                },
+            },
+            {
+                new: true,
+            }
+        );
+    } catch (e) {
+        throw e;
+    }
+};
+
+module.exports = {
+    createGroup,
+    addMember,
+    removeMember,
+    makeAsAdmin,
+    dismissAsAdmin,
+};

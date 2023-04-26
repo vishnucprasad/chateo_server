@@ -7,6 +7,7 @@ const {
     addMember,
     removeMember,
     makeAsAdmin,
+    dismissAsAdmin,
 } = require("../services/group.service");
 const { emitNewChat } = require("../sockets/chat.socket");
 
@@ -64,9 +65,23 @@ const makeAsAdminController = async (req, res, next) => {
     }
 };
 
+const dismissAsAdminController = async (req, res, next) => {
+    try {
+        const chat = await dismissAsAdmin(req.body);
+
+        res.status(statusCodes.OK).json({
+            error: false,
+            chat,
+        });
+    } catch (e) {
+        next(InternalServerError(e.message));
+    }
+};
+
 module.exports = {
     newGroupController,
     addMemberController,
     removeMemberController,
     makeAsAdminController,
+    dismissAsAdminController,
 };

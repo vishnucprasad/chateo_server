@@ -30,6 +30,8 @@
     1. [Remove Member](#i-example-request-remove-member)
 1. [Make As Admin](#11-make-as-admin)
     1. [Make As Admin](#i-example-request-make-as-admin)
+1. [Dismiss As Admin](#12-dismiss-as-admin)
+    1. [Dismiss As Admin](#i-example-request-dismiss-as-admin)
 
 ## Endpoints
 
@@ -678,6 +680,90 @@ URL: http://localhost:3000/api/v1/chat/group/admin
                 "userId": "64489734c6c9612a46d1da43",
                 "isOwner": false,
                 "isAdmin": true,
+                "_id": "6449287e20afc5a50b84b005"
+            }
+        ],
+        "messages": [],
+        "__v": 0
+    }
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 12. Dismiss As Admin
+
+**_Endpoint:_**
+
+```bash
+Method: DELETE
+Type: RAW
+URL: http://localhost:3000/api/v1/chat/group/admin
+```
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
+}
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: Dismiss As Admin
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
+}
+```
+
+#### I. Example Response: Dismiss As Admin
+
+```js
+{
+    "error": false,
+    "chat": {
+        "permissions": {
+            "sendMessages": "everyone",
+            "manageGroup": "everyone"
+        },
+        "_id": "644807523ad08eba4ae0f753",
+        "name": "Brainstorm",
+        "createdAt": 1682441949286,
+        "modifiedAt": 1682520219964,
+        "isActive": true,
+        "isMuted": false,
+        "members": [
+            {
+                "userId": "6443db9aa480ecadc1e60c73",
+                "isOwner": true,
+                "isAdmin": true,
+                "_id": "644807523ad08eba4ae0f754"
+            },
+            {
+                "userId": "6446991e8f13b245851d2294",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f755"
+            },
+            {
+                "userId": "6447450c95ec40bd66a9a267",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f756"
+            },
+            {
+                "userId": "64489734c6c9612a46d1da43",
+                "isOwner": false,
+                "isAdmin": false,
                 "_id": "6449287e20afc5a50b84b005"
             }
         ],
