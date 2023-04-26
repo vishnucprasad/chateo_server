@@ -1,9 +1,17 @@
 "use strict";
 
 const express = require("express");
-const { newGroupConroller } = require("../../controllers/group.controller");
+const {
+    newGroupController,
+    addMemberController,
+} = require("../../controllers/group.controller");
+const {
+    isGroupAdmin,
+    isNotAMember,
+} = require("../../middlewares/group.middleware");
 const router = express.Router();
 
-router.post("/new", newGroupConroller);
+router.post("/new", newGroupController);
+router.post("/member", isGroupAdmin, isNotAMember, addMemberController);
 
 module.exports = router;

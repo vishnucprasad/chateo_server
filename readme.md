@@ -24,6 +24,8 @@
     1. [New Chat](#i-example-request-new-chat)
 1. [New Group Chat](#8-new-group-chat)
     1. [New Group Chat](#i-example-request-new-group-chat)
+1. [Add Member](#9-add-member)
+    1. [Add Member](#i-example-request-add-member)
 
 ## Endpoints
 
@@ -462,6 +464,90 @@ URL: http://localhost:3000/api/v1/chat/group/new
         ],
         "messages": [],
         "_id": "644806e03ad08eba4ae0f74e",
+        "__v": 0
+    }
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 9. Add Member
+
+**_Endpoint:_**
+
+```bash
+Method: POST
+Type: RAW
+URL: http://localhost:3000/api/v1/chat/group/member
+```
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
+}
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: Add Member
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "userId": "64489734c6c9612a46d1da43"
+}
+```
+
+#### I. Example Response: Add Member
+
+```js
+{
+    "error": false,
+    "chat": {
+        "permissions": {
+            "sendMessages": "everyone",
+            "manageGroup": "everyone"
+        },
+        "_id": "644807523ad08eba4ae0f753",
+        "name": "Brainstorm",
+        "createdAt": 1682441949286,
+        "modifiedAt": 1682484411412,
+        "isActive": true,
+        "isMuted": false,
+        "members": [
+            {
+                "userId": "6443db9aa480ecadc1e60c73",
+                "isOwner": true,
+                "isAdmin": true,
+                "_id": "644807523ad08eba4ae0f754"
+            },
+            {
+                "userId": "6446991e8f13b245851d2294",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f755"
+            },
+            {
+                "userId": "6447450c95ec40bd66a9a267",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f756"
+            },
+            {
+                "userId": "64489734c6c9612a46d1da43",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "6448acbb8aded062d864252f"
+            }
+        ],
+        "messages": [],
         "__v": 0
     }
 }

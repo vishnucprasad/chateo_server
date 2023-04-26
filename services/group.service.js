@@ -24,4 +24,22 @@ const createGroup = async (ownerId, { groupDetails, members }) => {
     }
 };
 
-module.exports = { createGroup };
+const addMember = async ({ chatId, userId }) => {
+    try {
+        return await Group.findOneAndUpdate(
+            { _id: chatId },
+            {
+                $addToSet: {
+                    members: { userId },
+                },
+            },
+            {
+                new: true,
+            }
+        );
+    } catch (e) {
+        throw e;
+    }
+};
+
+module.exports = { createGroup, addMember };
