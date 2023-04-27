@@ -1,5 +1,6 @@
 "use strict";
 
+const InternalServerError = require("../errors/internalserver.error");
 const Group = require("../models/group.model");
 
 const createGroup = async (ownerId, { groupDetails, members }) => {
@@ -102,10 +103,33 @@ const dismissAsAdmin = async ({ chatId, userId }) => {
     }
 };
 
+const editGroup = async ({ chatId, name, description, avatar }) => {
+    try {
+        return await Group.findOneAndUpdate(
+            {
+                _id: chatId,
+            },
+            {
+                $set: {
+                    name,
+                    description,
+                    avatar,
+                },
+            },
+            {
+                new: true,
+            }
+        );
+    } catch (e) {
+        next(InternalServerError(e.message));
+    }
+};
+
 module.exports = {
     createGroup,
     addMember,
     removeMember,
     makeAsAdmin,
     dismissAsAdmin,
+    editGroup,
 };

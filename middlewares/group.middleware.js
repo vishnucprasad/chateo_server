@@ -82,4 +82,35 @@ const isAMember = async (req, res, next) => {
     }
 };
 
-module.exports = { isGroupAdmin, isNotAMember, isAMember };
+const checkPermission = async (req, res, next) => {
+    try {
+        const { _id } = req.decoded;
+
+        const doc = await Group.findOne({
+            _id: req.body.chatId,
+        }).select({
+            members: {
+                $elemMatch: {
+                    userId: _id,
+                },
+            },
+        });
+
+        const permissions = doc.permissions;
+        const member = doc.members[0];
+
+        if (permissions.manageGroup === "everyone") {
+            return next();
+        }
+
+        if (permissions.manageGroup === "adminonly" && member.isAdmin) {
+            return next();
+        }
+
+        return next(ForbiddenError("Access denied"));
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+};
+
+module.exports = { isGroupAdmin, isNotAMember, isAMember, checkPermission };
