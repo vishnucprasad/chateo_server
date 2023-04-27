@@ -121,7 +121,31 @@ const editGroup = async ({ chatId, name, description, avatar }) => {
             }
         );
     } catch (e) {
-        next(InternalServerError(e.message));
+        throw e;
+    }
+};
+
+const updateGroupPermissions = async ({
+    chatId,
+    permissions: { sendMessages, manageGroup },
+}) => {
+    try {
+        return await Group.findOneAndUpdate(
+            {
+                _id: chatId,
+            },
+            {
+                $set: {
+                    "permissions.sendMessages": sendMessages,
+                    "permissions.manageGroup": manageGroup,
+                },
+            },
+            {
+                new: true,
+            }
+        );
+    } catch (e) {
+        throw e;
     }
 };
 
@@ -132,4 +156,5 @@ module.exports = {
     makeAsAdmin,
     dismissAsAdmin,
     editGroup,
+    updateGroupPermissions,
 };

@@ -34,6 +34,8 @@
     1. [Dismiss As Admin](#i-example-request-dismiss-as-admin)
 1. [Edit Group](#13-edit-group)
     1. [Edit Group](#i-example-request-edit-group)
+1. [Update Group Permissions](#14-update-group-permissions)
+    1. [Update Group Permissions](#i-example-request-update-group-permissions)
 
 ## Endpoints
 
@@ -105,7 +107,7 @@ URL: http://localhost:3000/api/v1/auth/verify/otp
 {
     "countryCode": "+91",
     "phone": "8157983670",
-    "otp": "2504"
+    "otp": "2704"
 }
 ```
 
@@ -212,7 +214,7 @@ URL: http://localhost:3000/api/v1/auth/refresh
 
 ```js
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQzZGI5YWE0ODBlY2FkYzFlNjBjNzMiLCJyb2xlIjoidXNlciIsImlhdCI6MTY4MjQzOTQ2MSwiZXhwIjoxNjg3NjIzNDYxfQ.h_XN_x5IjsI8ACJKuOhmagVzesTMZNZunTlamWGdSRM"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQzZGI5YWE0ODBlY2FkYzFlNjBjNzMiLCJyb2xlIjoidXNlciIsImlhdCI6MTY4MjU2ODYzOCwiZXhwIjoxNjg3NzUyNjM4fQ.pkedQXbjzDR5kue5qX6MAsXcSW8AK_NKDa292xDEhXI"
 }
 ```
 
@@ -794,8 +796,7 @@ URL: http://localhost:3000/api/v1/chat/group
 ```js
 {
     "chatId": "644807523ad08eba4ae0f753",
-    "name": "Brainstorm here",
-    "description": "Developers community"
+    "name": "Brainstorm here"
 }
 ```
 
@@ -827,6 +828,97 @@ URL: http://localhost:3000/api/v1/chat/group
         "name": "Brainstorm here",
         "createdAt": 1682441949286,
         "modifiedAt": 1682563995800,
+        "isActive": true,
+        "isMuted": false,
+        "members": [
+            {
+                "userId": "6443db9aa480ecadc1e60c73",
+                "isOwner": true,
+                "isAdmin": true,
+                "_id": "644807523ad08eba4ae0f754"
+            },
+            {
+                "userId": "6446991e8f13b245851d2294",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f755"
+            },
+            {
+                "userId": "6447450c95ec40bd66a9a267",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f756"
+            },
+            {
+                "userId": "64489734c6c9612a46d1da43",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "6449287e20afc5a50b84b005"
+            }
+        ],
+        "messages": [],
+        "__v": 0,
+        "description": "Developers community"
+    }
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 14. Update Group Permissions
+
+**_Endpoint:_**
+
+```bash
+Method: PATCH
+Type: RAW
+URL: http://localhost:3000/api/v1/chat/group/permissions
+```
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "permissions": {
+        "sendMessages": "everyone",
+        "manageGroup": "adminonly"
+    }
+}
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: Update Group Permissions
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753",
+    "permissions": {
+        "sendMessages": "everyone",
+        "manageGroup": "adminonly"
+    }
+}
+```
+
+#### I. Example Response: Update Group Permissions
+
+```js
+{
+    "error": false,
+    "chat": {
+        "permissions": {
+            "sendMessages": "everyone",
+            "manageGroup": "adminonly"
+        },
+        "_id": "644807523ad08eba4ae0f753",
+        "name": "Brainstorm here",
+        "createdAt": 1682441949286,
+        "modifiedAt": 1682573307799,
         "isActive": true,
         "isMuted": false,
         "members": [

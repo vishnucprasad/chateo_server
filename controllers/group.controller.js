@@ -9,6 +9,7 @@ const {
     makeAsAdmin,
     dismissAsAdmin,
     editGroup,
+    updateGroupPermissions,
 } = require("../services/group.service");
 const { emitNewChat } = require("../sockets/chat.socket");
 
@@ -92,6 +93,19 @@ const editGroupController = async (req, res, next) => {
     }
 };
 
+const updateGroupPermissionsController = async (req, res, next) => {
+    try {
+        const chat = await updateGroupPermissions(req.body);
+
+        res.status(statusCodes.OK).json({
+            error: false,
+            chat,
+        });
+    } catch (e) {
+        next(InternalServerError(e.message));
+    }
+};
+
 module.exports = {
     newGroupController,
     addMemberController,
@@ -99,4 +113,5 @@ module.exports = {
     makeAsAdminController,
     dismissAsAdminController,
     editGroupController,
+    updateGroupPermissionsController,
 };
