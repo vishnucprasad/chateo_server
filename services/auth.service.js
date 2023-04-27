@@ -34,7 +34,7 @@ const generateTokens = async (user, role) => {
             expiresIn: jwtConfig.jwtExpiration,
         });
 
-        const newRefreshToken = await jwt.sign(payload, jwtConfig.secret, {
+        const newRefreshToken = await jwt.sign(payload, jwtConfig.rTSecret, {
             expiresIn: jwtConfig.jwtRefreshExpiration,
         });
 
@@ -70,7 +70,7 @@ const verifyRefreshToken = async (refreshToken) => {
             throw new UnauthorizedError();
         }
 
-        return await jwt.verify(refreshToken, jwtConfig.secret);
+        return await jwt.verify(refreshToken, jwtConfig.rTSecret);
     } catch (e) {
         throw new UnauthorizedError();
     }
