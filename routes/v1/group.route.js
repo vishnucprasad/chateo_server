@@ -9,6 +9,7 @@ const {
     dismissAsAdminController,
     editGroupController,
     updateGroupPermissionsController,
+    updateSettingsController,
 } = require("../../controllers/group.controller");
 const {
     isGroupAdmin,
@@ -25,5 +26,6 @@ router.delete("/member", isGroupAdmin, isAMember, removeMemberController);
 router.post("/admin", isGroupAdmin, isAMember, makeAsAdminController);
 router.delete("/admin", isGroupAdmin, isAMember, dismissAsAdminController);
 router.patch("/permissions", isGroupAdmin, updateGroupPermissionsController);
+router.patch("/settings", isGroupAdmin, updateSettingsController);
 
 module.exports = router;

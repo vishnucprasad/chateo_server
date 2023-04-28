@@ -149,6 +149,27 @@ const updateGroupPermissions = async ({
     }
 };
 
+const updateSettings = ({ chatId, settings: { isActive, isMuted } }) => {
+    try {
+        return Group.findOneAndUpdate(
+            {
+                _id: chatId,
+            },
+            {
+                $set: {
+                    isActive,
+                    isMuted,
+                },
+            },
+            {
+                new: true,
+            }
+        );
+    } catch (e) {
+        throw e;
+    }
+};
+
 module.exports = {
     createGroup,
     addMember,
@@ -157,4 +178,5 @@ module.exports = {
     dismissAsAdmin,
     editGroup,
     updateGroupPermissions,
+    updateSettings,
 };
