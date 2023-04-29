@@ -9,4 +9,11 @@ const emitNewChat = (to, chat) => {
     io.to(to.toString()).emit("new chat", chat);
 };
 
-module.exports = { emitNewChat };
+const emitNewMessage = (to, message) => {
+    const socketio = new SocketIO();
+    const io = socketio.getIO();
+
+    io.to(to.toString()).emit("new message", message);
+};
+
+module.exports = { emitNewChat, emitNewMessage };

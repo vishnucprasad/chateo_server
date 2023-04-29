@@ -42,6 +42,8 @@
     1. [Delete Group](#i-example-request-delete-group)
 1. [Get All Chats](#17-get-all-chats)
     1. [Get All Chats](#i-example-request-get-all-chats)
+1. [New Message](#18-new-message)
+    1. [New Message](#i-example-request-new-message)
 
 ## Endpoints
 
@@ -1206,6 +1208,59 @@ URL: http://localhost:3000/api/v1/chat
             "__v": 0
         }
     ]
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 18. New Message
+
+**_Endpoint:_**
+
+```bash
+Method: POST
+Type: RAW
+URL: http://localhost:3000/api/v1/chat/message/new
+```
+
+**_Body:_**
+
+```js
+{
+    "chatId": "6447fd7b227aceeb093019a2",
+    "text": "This is a new message"
+}
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: New Message
+
+**_Body:_**
+
+```js
+{
+    "chatId": "6447fd7b227aceeb093019a2",
+    "text": "This is a new message"
+}
+```
+
+#### I. Example Response: New Message
+
+```js
+{
+    "error": false,
+    "message": {
+        "chatId": "6447fd7b227aceeb093019a2",
+        "senderId": "6443db9aa480ecadc1e60c73",
+        "timeStamp": 1682777610862,
+        "status": "sent",
+        "text": "This is a new message",
+        "_id": "644d262927afc936d8ae4f1a",
+        "__v": 0
+    }
 }
 ```
 
