@@ -2,6 +2,7 @@
 
 const ObjectId = require("mongoose").Types.ObjectId;
 const Chat = require("../models/chat.model");
+const Group = require("../models/group.model");
 const Message = require("../models/message.model");
 
 const createChat = async (from, to, msg) => {
@@ -27,4 +28,26 @@ const createChat = async (from, to, msg) => {
     }
 };
 
-module.exports = { createChat };
+const getChats = async (userId) => {
+    try {
+        const chats = await Chat.find({
+            members: {
+                $in: [userId],
+            },
+        });
+
+        const groupChats = await Group.find({
+            "members.userId": userId,
+        });
+
+        const allChats = [...chats, ...groupChats].sort(
+            (a, b) => b.modifiedAt - a.modifiedAt
+        );
+
+        return allChats;
+    } catch (e) {
+        throw e;
+    }
+};
+
+module.exports = { createChat, getChats };

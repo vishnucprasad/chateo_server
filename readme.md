@@ -40,6 +40,8 @@
     1. [Update Settings](#i-example-request-update-settings)
 1. [Delete Group](#16-delete-group)
     1. [Delete Group](#i-example-request-delete-group)
+1. [Get All Chats](#17-get-all-chats)
+    1. [Get All Chats](#i-example-request-get-all-chats)
 
 ## Endpoints
 
@@ -1127,6 +1129,83 @@ URL: http://localhost:3000/api/v1/chat/group
         "__v": 0,
         "description": "Developers community"
     }
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 17. Get All Chats
+
+**_Endpoint:_**
+
+```bash
+Method: GET
+Type:
+URL: http://localhost:3000/api/v1/chat
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: Get All Chats
+
+**_Body: None_**
+
+#### I. Example Response: Get All Chats
+
+```js
+{
+    "error": false,
+    "chats": [
+        {
+            "permissions": {
+                "sendMessages": "everyone",
+                "manageGroup": "everyone"
+            },
+            "_id": "644c87ad8a1183412a9a3f19",
+            "name": "Brainstorm",
+            "createdAt": 1682736974618,
+            "modifiedAt": 1682736974618,
+            "isActive": true,
+            "isMuted": false,
+            "members": [
+                {
+                    "userId": "6443db9aa480ecadc1e60c73",
+                    "isOwner": true,
+                    "isAdmin": true,
+                    "_id": "644c87ad8a1183412a9a3f1a"
+                },
+                {
+                    "userId": "6446991e8f13b245851d2294",
+                    "isOwner": false,
+                    "isAdmin": false,
+                    "_id": "644c87ad8a1183412a9a3f1b"
+                },
+                {
+                    "userId": "6447450c95ec40bd66a9a267",
+                    "isOwner": false,
+                    "isAdmin": false,
+                    "_id": "644c87ad8a1183412a9a3f1c"
+                }
+            ],
+            "messages": [],
+            "__v": 0
+        },
+        {
+            "_id": "6447fd7b227aceeb093019a2",
+            "members": [
+                "6443db9aa480ecadc1e60c73",
+                "6446991e8f13b245851d2294"
+            ],
+            "createdAt": 1682439438691,
+            "modifiedAt": 1682439438691,
+            "messages": [
+                "6447fd7b227aceeb093019a3"
+            ],
+            "__v": 0
+        }
+    ]
 }
 ```
 

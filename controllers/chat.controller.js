@@ -3,7 +3,7 @@
 const statusCodes = require("../config/statuscodes.config");
 const ConflictError = require("../errors/conflict.error");
 const InternalServerError = require("../errors/internalserver.error");
-const { createChat } = require("../services/chat.service");
+const { createChat, getChats } = require("../services/chat.service");
 const { emitNewChat } = require("../sockets/chat.socket");
 
 const newChatConroller = async (req, res, next) => {
@@ -24,4 +24,19 @@ const newChatConroller = async (req, res, next) => {
     }
 };
 
-module.exports = { newChatConroller };
+const getChatsController = async (req, res, next) => {
+    try {
+        const { _id } = req.decoded;
+
+        const chats = await getChats(_id);
+
+        res.status(statusCodes.OK).json({
+            error: false,
+            chats,
+        });
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+};
+
+module.exports = { newChatConroller, getChatsController };
