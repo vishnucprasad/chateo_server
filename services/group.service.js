@@ -170,6 +170,14 @@ const updateSettings = ({ chatId, settings: { isActive, isMuted } }) => {
     }
 };
 
+const deleteGroup = async (chatId) => {
+    try {
+        return await Group.findOneAndDelete({ _id: chatId });
+    } catch (e) {
+        throw e;
+    }
+};
+
 module.exports = {
     createGroup,
     addMember,
@@ -179,4 +187,5 @@ module.exports = {
     editGroup,
     updateGroupPermissions,
     updateSettings,
+    deleteGroup,
 };

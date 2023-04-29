@@ -38,6 +38,8 @@
     1. [Update Group Permissions](#i-example-request-update-group-permissions)
 1. [Update Settings](#15-update-settings)
     1. [Update Settings](#i-example-request-update-settings)
+1. [Delete Group](#16-delete-group)
+    1. [Delete Group](#i-example-request-delete-group)
 
 ## Endpoints
 
@@ -997,6 +999,89 @@ URL: http://localhost:3000/api/v1/chat/group/settings
 ```
 
 #### I. Example Response: Update Settings
+
+```js
+{
+    "error": false,
+    "chat": {
+        "permissions": {
+            "sendMessages": "everyone",
+            "manageGroup": "adminonly"
+        },
+        "_id": "644807523ad08eba4ae0f753",
+        "name": "Brainstorm here",
+        "createdAt": 1682441949286,
+        "modifiedAt": 1682648839288,
+        "isActive": true,
+        "isMuted": true,
+        "members": [
+            {
+                "userId": "6443db9aa480ecadc1e60c73",
+                "isOwner": true,
+                "isAdmin": true,
+                "_id": "644807523ad08eba4ae0f754"
+            },
+            {
+                "userId": "6446991e8f13b245851d2294",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f755"
+            },
+            {
+                "userId": "6447450c95ec40bd66a9a267",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "644807523ad08eba4ae0f756"
+            },
+            {
+                "userId": "64489734c6c9612a46d1da43",
+                "isOwner": false,
+                "isAdmin": false,
+                "_id": "6449287e20afc5a50b84b005"
+            }
+        ],
+        "messages": [],
+        "__v": 0,
+        "description": "Developers community"
+    }
+}
+```
+
+**_Status Code:_** 200
+
+<br>
+
+### 16. Delete Group
+
+**_Endpoint:_**
+
+```bash
+Method: DELETE
+Type: RAW
+URL: http://localhost:3000/api/v1/chat/group
+```
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753"
+}
+```
+
+**_More example Requests/Responses:_**
+
+#### I. Example Request: Delete Group
+
+**_Body:_**
+
+```js
+{
+    "chatId": "644807523ad08eba4ae0f753"
+}
+```
+
+#### I. Example Response: Delete Group
 
 ```js
 {

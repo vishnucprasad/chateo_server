@@ -11,6 +11,7 @@ const {
     editGroup,
     updateGroupPermissions,
     updateSettings,
+    deleteGroup,
 } = require("../services/group.service");
 const { emitNewChat } = require("../sockets/chat.socket");
 
@@ -120,6 +121,19 @@ const updateSettingsController = async (req, res, next) => {
     }
 };
 
+const deleteGroupController = async (req, res, next) => {
+    try {
+        const chat = await deleteGroup(req.body.chatId);
+
+        res.status(statusCodes.OK).json({
+            error: false,
+            chat,
+        });
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+};
+
 module.exports = {
     newGroupController,
     addMemberController,
@@ -129,4 +143,5 @@ module.exports = {
     editGroupController,
     updateGroupPermissionsController,
     updateSettingsController,
+    deleteGroupController,
 };

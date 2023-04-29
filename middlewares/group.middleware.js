@@ -32,6 +32,32 @@ const isGroupAdmin = async (req, res, next) => {
     }
 };
 
+const isGroupOwner = async (req, res, next) => {
+    try {
+        const { _id } = req.decoded;
+
+        const doc = await Group.findOne({
+            _id: req.body.chatId,
+        }).select({
+            members: {
+                $elemMatch: {
+                    userId: _id,
+                },
+            },
+        });
+
+        const member = doc.members[0];
+
+        if (!member || !member.isOwner) {
+            return next(new ForbiddenError("Access denied"));
+        }
+
+        return next();
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+};
+
 const isNotAMember = async (req, res, next) => {
     try {
         const doc = await Group.findOne({
@@ -113,4 +139,10 @@ const checkPermission = async (req, res, next) => {
     }
 };
 
-module.exports = { isGroupAdmin, isNotAMember, isAMember, checkPermission };
+module.exports = {
+    isGroupAdmin,
+    isGroupOwner,
+    isNotAMember,
+    isAMember,
+    checkPermission,
+};
